@@ -29,7 +29,7 @@ import javax.swing.table.TableColumn;
  *
  * @author dosen
  */
-public class RMCariKeluhan extends javax.swing.JDialog {
+public class RMCariKeluhanIGD extends javax.swing.JDialog {
     private final DefaultTableModel tabMode;
     private validasi Valid=new validasi();
     private Connection koneksi=koneksiDB.condb();
@@ -42,7 +42,7 @@ public class RMCariKeluhan extends javax.swing.JDialog {
     /** Creates new form DlgPenyakit
      * @param parent
      * @param modal */
-    public RMCariKeluhan(java.awt.Frame parent, boolean modal) {
+    public RMCariKeluhanIGD(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocation(10,2);
@@ -54,7 +54,7 @@ public class RMCariKeluhan extends javax.swing.JDialog {
 //        };
 //        tbKamar.setModel(tabMode);
         tabMode=new DefaultTableModel(null,new Object[]{
-                "P","Tanggal","Jam","Keluhan"
+                "P","Tanggal","diagnosa","Keluhan"
             }){
              Class[] types = new Class[] {
                 java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
@@ -82,7 +82,7 @@ public class RMCariKeluhan extends javax.swing.JDialog {
             }else if(z==1){
                 column.setPreferredWidth(65);
             }else if(z==2){
-                column.setPreferredWidth(50);
+                column.setPreferredWidth(150);
             }else if(z==3){
                 column.setPreferredWidth(750);
             }
@@ -184,7 +184,7 @@ public class RMCariKeluhan extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Riwayat Keluhan ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(50, 50, 50))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Riwayat Keluhan  IGD ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(50, 50, 50))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -376,7 +376,7 @@ public class RMCariKeluhan extends javax.swing.JDialog {
     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
-            RMCariKeluhan dialog = new RMCariKeluhan(new javax.swing.JFrame(), true);
+            RMCariKeluhanIGD dialog = new RMCariKeluhanIGD(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -442,10 +442,10 @@ public class RMCariKeluhan extends javax.swing.JDialog {
         Valid.tabelKosong(tabMode);
         try{
             ps=koneksi.prepareStatement(
-                    "select pemeriksaan_ralan.tgl_perawatan,pemeriksaan_ralan.jam_rawat,pemeriksaan_ralan.keluhan "+
-                    "from pemeriksaan_ralan where pemeriksaan_ralan.no_rawat=? and "+
-                    "(pemeriksaan_ralan.tgl_perawatan like ? or pemeriksaan_ralan.keluhan like ?) "+
-                    "order by pemeriksaan_ralan.tgl_perawatan,pemeriksaan_ralan.jam_rawat");
+                    "select penilaian_medis_igd.tanggal,penilaian_medis_igd.diagnosis,penilaian_medis_igd.rps "+
+                    "from penilaian_medis_igd where penilaian_medis_igd.no_rawat=? and "+
+                    "(penilaian_medis_igd.tanggal like ? or penilaian_medis_igd.diagnosis like ?) "+
+                    "order by penilaian_medis_igd.tanggal");
             try{
                 ps.setString(1,norawat);
                 ps.setString(2,"%"+TCari.getText().trim()+"%");
@@ -472,10 +472,10 @@ public class RMCariKeluhan extends javax.swing.JDialog {
         
         try{
             ps=koneksi.prepareStatement(
-                    "select pemeriksaan_ranap.tgl_perawatan,pemeriksaan_ranap.jam_rawat,pemeriksaan_ranap.keluhan "+
-                    "from pemeriksaan_ranap where pemeriksaan_ranap.no_rawat=? and "+
-                    "(pemeriksaan_ranap.tgl_perawatan like ? or pemeriksaan_ranap.keluhan like ?) "+
-                    "order by pemeriksaan_ranap.tgl_perawatan,pemeriksaan_ranap.jam_rawat");
+                    "select penilaian_medis_igd.tanggal,penilaian_medis_igd.diagnosis,penilaian_medis_igd.keluhan_utama "+
+                    "from penilaian_medis_igd where penilaian_medis_igd.no_rawat=? and "+
+                    "(penilaian_medis_igd.tanggal like ? or penilaian_medis_igd.diagnosis like ?) "+
+                    "order by penilaian_medis_igd.tanggal");
             try{
                 ps.setString(1,norawat);
                 ps.setString(2,"%"+TCari.getText().trim()+"%");
