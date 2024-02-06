@@ -370,7 +370,7 @@ public final class RMDataResumePasien extends javax.swing.JDialog {
             public void windowClosing(WindowEvent e) {}
             @Override
             public void windowClosed(WindowEvent e) {
-                tampil();
+             //   tampil();
                 datapenyakit();
             }
             @Override

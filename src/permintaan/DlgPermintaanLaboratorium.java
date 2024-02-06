@@ -25,6 +25,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -2781,6 +2786,8 @@ private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     isReset();
                     emptTeks();
                     JOptionPane.showMessageDialog(null,"Proses simpan selesai...!");
+                 
+                                     
                 }else{
                     JOptionPane.showMessageDialog(null,"Proses simpan gagal...!");
                 }

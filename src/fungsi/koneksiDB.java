@@ -1344,4 +1344,50 @@ public class koneksiDB {
         }
         return var;
     }
+    
+    public static String TOKENBOTTELE(){
+        try{
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var=prop.getProperty("TOKENBOTTELE");
+        }catch(Exception e){
+            var=""; 
+        }
+        return var;
+    }
+     public static String TELERAD(){
+        try{
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var=EnkripsiAES.decrypt(prop.getProperty("TELERAD"));
+        }catch(Exception e){
+            var=""; 
+        }
+        return var;
+    }
+     public static String TELELAB(){
+        try{
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var=EnkripsiAES.decrypt(prop.getProperty("TELELAB"));
+        }catch(Exception e){
+            var=""; 
+        }
+        return var;
+    }
+      public static String TELEFARMASI(){
+        try{
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var=EnkripsiAES.decrypt(prop.getProperty("TELEFARMASI"));
+        }catch(Exception e){
+            var=""; 
+        }
+        return var;
+    }
+      public static String TELERADHASIL(){
+        try{
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var=EnkripsiAES.decrypt(prop.getProperty("TELERADHASIL"));
+        }catch(Exception e){
+            var=""; 
+        }
+        return var;
+    }
 }

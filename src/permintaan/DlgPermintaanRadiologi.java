@@ -28,9 +28,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -446,7 +451,7 @@ public final class DlgPermintaanRadiologi extends javax.swing.JDialog {
         PanelInput.add(jLabel9);
         jLabel9.setBounds(0, 42, 92, 23);
 
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-10-2023" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2024" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
@@ -1373,6 +1378,41 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                             });
                         }                        
                     } 
+                    //START CODE TELEGRAM
+                    String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s&parse_mode=HTML";
+                    //token bot telegram
+                    String apiToken = koneksiDB.TOKENBOTTELE();
+                    //chat id grup telegram
+                    String chatId = koneksiDB.TELERAD();
+                    String PermintaanTx=TNoPermintaan.getText();
+                    String PasienTx=TPasien.getText();
+                    String NoRMTx=TNoRM.getText();
+                    String DokterTx=NmPerujuk.getText();
+                    String Diagnosa=DiagnosisKlinis.getText();
+                    String InfoTambahan=InformasiTambahan.getText();
+                    String InfoTanggal=Valid.SetTgl(Tanggal.getSelectedItem()+"");
+                    String InfoJam=CmbJam.getSelectedItem()+":"+CmbMenit.getSelectedItem();
+                    String Prgraf = "<b><u>PERMINTAAN RADIOLOGI</u></b>"+
+                            "%0ANomor Permintaan : <b>"+PermintaanTx+"</b>"+
+                            "%0APasien : <b>"+PasienTx+" || "+NoRMTx+"</b>"+
+                            "%0ADokter Perujuk : <b>"+DokterTx+"</b>"+
+                            "%0AIndikasi/Diagnosa: <b>"+Diagnosa+"</b>"+
+                            "%0AInfo Tambahan: <b>"+InfoTambahan+"</b>"+
+                            "%0A%0A=============: JADWAL PERIKSA :============="+
+                            "%0ATanggal : <b>"+InfoTanggal+"</b>"+
+                            "%0AJam : <b>"+InfoJam+" WIB</b>"+
+                            "%0ALakukan Validasi di menu Permintaan RADIOLOGI";
+                    String text = Prgraf;
+                    String isiText = text.replace(" ", "%20");       
+                    urlString = String.format(urlString, apiToken, chatId, isiText );
+                      try {
+                        URL url = new URL(urlString);
+                        URLConnection conn = url.openConnection();
+                        InputStream is = new BufferedInputStream(conn.getInputStream());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                //END CODE TELEGRAM 
                     isReset();
                     emptTeks();
                 }else{
